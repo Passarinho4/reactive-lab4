@@ -1,0 +1,17 @@
+            Default (leveldb.native=off)      | Default (leveldb.native=on)       |        Mongo                 |
+Read 100k            4.643546913                        4.04444365                         6.193815182
+Read 200k            4.994924158                        5.053787239                        ... *
+Read 300k            6.083187649                        6.431682233                        ... *
+
+* - zapis tak wolny, że nie chciało mi się czekać. (ok 100-200 eventów / sekunde)
+
+Write 10k            3.8256897                          3.089013214                        118.146617718
+Write 20k            6.995028316                        4.158164287                        242.38854127
+Write 30k            6.58619433                         5.382940488
+Write 50k            12.094293848                       7.329481977
+
+Wnioski: Dużo wolniejsze jest korzystanie z mongo, natomiast myślę, że jest to spowodowane
+niezbyt optymalną konfiguracją. Zapis na poziomie kilkuset dokumentów/sekunde to bardzo bardzo słaby wynik
+jak na mongoDB. Mongo również niekoniecznie dobrze nadaje się do tego zastosowania, gdyż jest bazą dokumentową,
+a w tym zastosowaniu zdecydowanie lepiej sprawdzi się key-value store. Uważam, że znacząco lepsze wyniki byłyby przy
+użyciu redisa (Ale nie testowałem).
